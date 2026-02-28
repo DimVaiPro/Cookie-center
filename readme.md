@@ -1,5 +1,5 @@
 === Κέντρο Συγκατάθεσης Cookies ===
-Contributors: dimitris
+Contributors: Computer Studio
 Tags: cookies, consent, gdpr, cookie banner, tag manager
 Requires at least: 6.0
 Tested up to: 6.7
@@ -25,7 +25,3 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 2. Ενεργοποιήστε το πρόσθετο μέσα από το μενού «Πρόσθετα» του WordPress.
 3. Μεταβείτε στο μενού Εργαλεία → Διαχείριση Cookies για να ρυθμίσετε τις κατηγορίες cookies.
 
-== Changelog ==
-
-= 1.0.0 =
-* Αρχική έκδοση.

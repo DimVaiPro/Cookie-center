@@ -174,7 +174,7 @@ $categories = CC_Settings::get_cookie_categories();
 				<td>
 					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12"><?php echo esc_textarea( $gtm_code ); ?></textarea>
 					<p class="description">
-						<?php _e( 'Επικολλήστε τον κώδικα &lt;script&gt; του Google Tag Manager. Πριν από αυτόν, θα προστεθεί αυτόματα ο κώδικας consent default.', 'cookie-center' ); ?>
+						<?php _e( 'Επικολλήστε τον κώδικα &lt;script&gt; του Google Tag Manager. Πριν από αυτόν, θα προστεθεί αυτόματα το Consent Default script.', 'cookie-center' ); ?>
 					</p>
 				</td>
 			</tr>
