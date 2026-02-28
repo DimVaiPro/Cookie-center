@@ -166,4 +166,45 @@
 				});
 		});
 	}
+
+	// Αποθήκευση κώδικα Google Tag Manager
+	var saveGtmBtn = document.getElementById('cc-save-gtm-code');
+	if (saveGtmBtn) {
+		saveGtmBtn.addEventListener('click', function () {
+			var spinner = document.getElementById('cc-gtm-spinner');
+			if (spinner) spinner.classList.add('is-active');
+
+			// Sync CodeMirror τιμή στο textarea (αν είναι ενεργοποιημένο)
+			if (window.ccGtmEditor) {
+				window.ccGtmEditor.codemirror.save();
+			}
+
+			var gtmCode = document.getElementById('cc-gtm-code').value;
+
+			var formData = new FormData();
+			formData.append('action', 'cc_save_gtm_code');
+			formData.append('nonce', ccAdmin.nonceGtmCode);
+			formData.append('gtm_code', gtmCode);
+
+			fetch(ccAdmin.ajaxUrl, {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: formData,
+			})
+				.then(function (response) { return response.json(); })
+				.then(function (result) {
+					if (spinner) spinner.classList.remove('is-active');
+
+					if (result.success) {
+						showNotice('cc-gtm-notice', result.data, 'success');
+					} else {
+						showNotice('cc-gtm-notice', result.data, 'error');
+					}
+				})
+				.catch(function () {
+					if (spinner) spinner.classList.remove('is-active');
+					showNotice('cc-gtm-notice', 'Σφάλμα δικτύου.', 'error');
+				});
+		});
+	}
 })()

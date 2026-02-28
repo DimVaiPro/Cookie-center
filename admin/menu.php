@@ -72,8 +72,21 @@ function cc_admin_enqueue_scripts( string $hook_suffix ): void {
 		'nonce'                => wp_create_nonce( 'cc_save_cookie_categories' ),
 		'nonceResetCategories' => wp_create_nonce( 'cc_reset_cookie_categories' ),
 		'nonceBannerTexts'     => wp_create_nonce( 'cc_save_banner_texts' ),
+		'nonceGtmCode'         => wp_create_nonce( 'cc_save_gtm_code' ),
 		'confirmReset'         => __( 'Είσαι σίγουρος/η ότι θέλεις να επαναφέρεις όλες τις κατηγορίες cookies στις προεπιλεγμένες τιμές; Τυχόν αλλαγές σου θα χαθούν.', 'cookie-center' ),
 	] );
+
+	// Ενεργοποίηση CodeMirror (native WP) για HTML syntax highlighting στο GTM textarea
+	$cm_settings = wp_enqueue_code_editor( [ 'type' => 'text/html' ] );
+	if ( false !== $cm_settings ) {
+		wp_add_inline_script(
+			'code-editor',
+			sprintf(
+				'jQuery(function() { if (document.getElementById("cc-gtm-code")) { window.ccGtmEditor = wp.codeEditor.initialize("cc-gtm-code", %s); } });',
+				wp_json_encode( $cm_settings )
+			)
+		);
+	}
 }
 add_action( 'admin_enqueue_scripts', 'cc_admin_enqueue_scripts' );
 
@@ -163,6 +176,34 @@ function cc_ajax_save_banner_texts(): void {
 	}
 }
 add_action( 'wp_ajax_cc_save_banner_texts', 'cc_ajax_save_banner_texts' );
+
+/**
+ * AJAX handler: αποθήκευση κώδικα Google Tag Manager.
+ *
+ * @return void
+ */
+function cc_ajax_save_gtm_code(): void {
+	// Έλεγχος nonce
+	check_ajax_referer( 'cc_save_gtm_code', 'nonce' );
+
+	// Έλεγχος δικαιωμάτων
+	if ( ! current_user_can( 'cc_manage_cookie_center_settings' ) ) {
+		wp_send_json_error( __( 'Δεν έχετε δικαίωμα αποθήκευσης.', 'cookie-center' ) );
+	}
+
+	// Χρήση wp_unslash χωρίς sanitize για να διατηρηθεί ο HTML/JS κώδικας
+	$gtm_code = isset( $_POST['gtm_code'] ) ? wp_unslash( $_POST['gtm_code'] ) : '';
+
+	$result   = CC_Settings::save_gtm_code( $gtm_code );
+	$existing = CC_Settings::get_gtm_code();
+
+	if ( $result || ( $existing === $gtm_code ) ) {
+		wp_send_json_success( __( 'Ο κώδικας Google Tag Manager αποθηκεύτηκε επιτυχώς.', 'cookie-center' ) );
+	} else {
+		wp_send_json_error( __( 'Σφάλμα κατά την αποθήκευση.', 'cookie-center' ) );
+	}
+}
+add_action( 'wp_ajax_cc_save_gtm_code', 'cc_ajax_save_gtm_code' );
 
 /**
  * Εμφάνιση της σελίδας ρυθμίσεων.

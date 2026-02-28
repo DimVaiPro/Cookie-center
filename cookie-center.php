@@ -38,6 +38,7 @@ if ( is_admin() ) {
 // Φόρτωση frontend λειτουργιών (cookie banner)
 if ( ! is_admin() ) {
 	add_action( 'wp_enqueue_scripts', 'cc_enqueue_frontend_assets' );
+	add_action( 'wp_head', 'cc_output_gtm_head_scripts', 3 );   // Priority 3
 	add_action( 'wp_footer', 'cc_render_cookie_banner' );
 	add_filter( 'script_loader_tag', 'cc_add_module_type_attribute', 10, 3 );
 }
@@ -104,6 +105,37 @@ function cc_add_module_type_attribute( string $tag, string $handle, string $src 
 	}
 
 	return str_replace( '<script ', '<script type="module" ', $tag );
+}
+
+/**
+ * Τοποθέτηση consent default script και Google Tag Manager κώδικα στο <head>.
+ *
+ * Εκτελείται με priority 1 στο wp_head ώστε ο GTM κώδικας
+ * να βρίσκεται όσο πιο ψηλά γίνεται στο <head>.
+ *
+ * @return void
+ */
+function cc_output_gtm_head_scripts(): void {
+	$gtm_code = CC_Settings::get_gtm_code();
+
+	if ( empty( trim( $gtm_code ) ) ) {
+		return;
+	}
+
+	// Consent default script — πρέπει να εκτελεστεί πριν τον GTM
+	?>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+if (localStorage.getItem('consentMode') === null) {
+	gtag('consent', 'default', {});
+} else {
+	gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
+}
+</script>
+<?php
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ο κώδικας GTM εισάγεται από τον διαχειριστή
+	echo $gtm_code . "\n";
 }
 
 /**

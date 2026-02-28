@@ -22,6 +22,7 @@ function cc_install(): void {
 	cc_add_custom_capabilities();
 	cc_initialize_cookie_options();
 	cc_initialize_banner_texts();
+	cc_initialize_gtm_code();
 }
 
 /**
@@ -104,5 +105,24 @@ function cc_initialize_banner_texts(): void {
 
 	if ( empty( $saved ) || ! is_array( $saved ) ) {
 		update_option( CC_Settings::OPTION_BANNER_TEXTS, CC_Settings::get_default_banner_texts() );
+	}
+}
+
+/**
+ * Αρχικοποίηση option για τον κώδικα Google Tag Manager.
+ *
+ * Δημιουργεί κενό option αν δεν υπάρχει ήδη.
+ *
+ * @return void
+ */
+function cc_initialize_gtm_code(): void {
+	if ( ! class_exists( 'CC_Settings' ) ) {
+		require_once CC_PLUGIN_DIR . 'includes/classes/CC_Settings.php';
+	}
+
+	$saved = get_option( CC_Settings::OPTION_GTM_CODE, null );
+
+	if ( null === $saved ) {
+		update_option( CC_Settings::OPTION_GTM_CODE, '' );
 	}
 }

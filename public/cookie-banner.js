@@ -38,6 +38,11 @@ if ( dialog ) {
 				consentMode[ cb.name ] = cb.checked ? 'granted' : 'denied';
 			} );
 
+			// Ενημέρωση Google Tag Manager consent (αν υπάρχει)
+			if ( typeof gtag === 'function' ) {
+				gtag( 'consent', 'update', consentMode );
+			}
+
 			// Αποθήκευση στο localStorage
 			localStorage.setItem( 'consentMode', JSON.stringify( consentMode ) );
 			console.log( 'Cookie consent saved:', dialog.returnValue, consentMode );

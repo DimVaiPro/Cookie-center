@@ -157,4 +157,37 @@ $categories = CC_Settings::get_cookie_categories();
 
 	<div id="cc-banner-texts-notice" style="display:none;"></div>
 
+	<hr />
+
+	<!-- Google Tag Manager -->
+	<h2><?php _e( 'Google Tag Manager', 'cookie-center' ); ?></h2>
+	<p class="description">
+		<?php _e( 'Επικολλήστε εδώ τον κώδικα Google Tag Manager (μόνο το &lt;script&gt; που τοποθετείται στο &lt;head&gt;). Αυτή η ενότητα λειτουργεί αποκλειστικά με κώδικα Google Tag Manager (GTM) και δεν υποστηρίζει κώδικα Google Analytics ή άλλου είδους tracking κώδικα.', 'cookie-center' ); ?>
+	</p>
+
+	<?php $gtm_code = CC_Settings::get_gtm_code(); ?>
+
+	<table class="form-table" role="presentation">
+		<tbody>
+			<tr>
+				<th scope="row"><label for="cc-gtm-code"><?php _e( 'Κώδικας GTM', 'cookie-center' ); ?></label></th>
+				<td>
+					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12"><?php echo esc_textarea( $gtm_code ); ?></textarea>
+					<p class="description">
+						<?php _e( 'Επικολλήστε τον κώδικα &lt;script&gt; του Google Tag Manager. Πριν από αυτόν, θα προστεθεί αυτόματα ο κώδικας consent default.', 'cookie-center' ); ?>
+					</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="submit">
+		<button type="button" class="button button-primary" id="cc-save-gtm-code">
+			<?php _e( 'Αποθήκευση Google Tag Manager', 'cookie-center' ); ?>
+		</button>
+		<span class="spinner" id="cc-gtm-spinner"></span>
+	</p>
+
+	<div id="cc-gtm-notice" style="display:none;"></div>
+
 </div>

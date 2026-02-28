@@ -200,6 +200,30 @@ class CC_Settings {
 	}
 
 	/**
+	 * Option name για τον κώδικα Google Tag Manager.
+	 */
+	const OPTION_GTM_CODE = 'cc_gtm_code';
+
+	/**
+	 * Επιστρέφει τον αποθηκευμένο κώδικα Google Tag Manager.
+	 *
+	 * @return string Ο GTM κώδικας (HTML/JS).
+	 */
+	public static function get_gtm_code(): string {
+		return (string) get_option( self::OPTION_GTM_CODE, '' );
+	}
+
+	/**
+	 * Αποθηκεύει τον κώδικα Google Tag Manager.
+	 *
+	 * @param string $code Ο GTM κώδικας (HTML/JS).
+	 * @return bool True αν η αποθήκευση ήταν επιτυχής.
+	 */
+	public static function save_gtm_code( string $code ): bool {
+		return update_option( self::OPTION_GTM_CODE, $code );
+	}
+
+	/**
 	 * Επιστρέφει τον τρέχοντα κωδικό γλώσσας (2 χαρακτήρες).
 	 *
 	 * Αν είναι εγκατεστημένο το WPML, χρησιμοποιεί την τρέχουσα γλώσσα του.
