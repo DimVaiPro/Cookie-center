@@ -17,6 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class CC_Settings {
 
 	/**
+	 * Προεπιλεγμένη γλώσσα του plugin.
+	 *
+	 * Χρησιμοποιείται ως fallback όταν δεν είναι εγκατεστημένο το WPML.
+	 * Άλλαξε σε 'en' για δοκιμή αγγλικής εμφάνισης.
+	 */
+	const DEFAULT_LANGUAGE = 'en';
+
+	/**
 	 * Option name για τις κατηγορίες cookies.
 	 */
 	const OPTION_COOKIE_CATEGORIES = 'cc_cookie_categories';
@@ -189,5 +197,71 @@ class CC_Settings {
 	 */
 	public static function save_banner_texts( array $texts ): bool {
 		return update_option( self::OPTION_BANNER_TEXTS, $texts );
+	}
+
+	/**
+	 * Επιστρέφει τον τρέχοντα κωδικό γλώσσας (2 χαρακτήρες).
+	 *
+	 * Αν είναι εγκατεστημένο το WPML, χρησιμοποιεί την τρέχουσα γλώσσα του.
+	 * Αλλιώς, επιστρέφει το DEFAULT_LANGUAGE.
+	 *
+	 * @return string Κωδικός γλώσσας, π.χ. 'el' ή 'en'.
+	 */
+	public static function get_current_language(): string {
+		// Έλεγχος WPML
+		if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
+			return (string) ICL_LANGUAGE_CODE;
+		}
+
+		return self::DEFAULT_LANGUAGE;
+	}
+
+	/**
+	 * Επιστρέφει τα localized κείμενα banner βάσει τρέχουσας γλώσσας.
+	 *
+	 * Για 'el' επιστρέφει τα πεδία χωρίς suffix,
+	 * για 'en' επιστρέφει τα πεδία με suffix '_en'.
+	 *
+	 * @return array<string, string> Κείμενα banner στην τρέχουσα γλώσσα.
+	 */
+	public static function get_localized_banner_texts(): array {
+		$texts = self::get_banner_texts();
+		$lang  = self::get_current_language();
+
+		if ( 'el' === $lang ) {
+			return [
+				'banner_text'         => $texts['banner_text'],
+				'btn_accept_all'      => $texts['btn_accept_all'],
+				'btn_accept_selected' => $texts['btn_accept_selected'],
+				'btn_reject_all'      => $texts['btn_reject_all'],
+			];
+		}
+
+		// Αγγλικά (ή οποιαδήποτε μη-ελληνική γλώσσα) — fallback σε _en
+		return [
+			'banner_text'         => $texts['banner_text_en'],
+			'btn_accept_all'      => $texts['btn_accept_all_en'],
+			'btn_accept_selected' => $texts['btn_accept_selected_en'],
+			'btn_reject_all'      => $texts['btn_reject_all_en'],
+		];
+	}
+
+	/**
+	 * Επιστρέφει τα localized πεδία μιας κατηγορίας cookies βάσει γλώσσας.
+	 *
+	 * Αντικαθιστά τα display_name/description με τα αντίστοιχα _en αν χρειάζεται.
+	 *
+	 * @param array<string, mixed> $cat Η κατηγορία cookie.
+	 * @return array<string, mixed> Η κατηγορία με localized πεδία.
+	 */
+	public static function localize_category( array $cat ): array {
+		$lang = self::get_current_language();
+
+		if ( 'el' !== $lang ) {
+			$cat['display_name'] = $cat['display_name_en'] ?? $cat['display_name'];
+			$cat['description']  = $cat['description_en'] ?? $cat['description'];
+		}
+
+		return $cat;
 	}
 }

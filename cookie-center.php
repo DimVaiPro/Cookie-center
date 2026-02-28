@@ -35,6 +35,13 @@ if ( is_admin() ) {
 	require_once CC_PLUGIN_DIR . 'admin/menu.php';
 }
 
+// Φόρτωση frontend λειτουργιών (cookie banner)
+if ( ! is_admin() ) {
+	add_action( 'wp_enqueue_scripts', 'cc_enqueue_frontend_assets' );
+	add_action( 'wp_footer', 'cc_render_cookie_banner' );
+	add_filter( 'script_loader_tag', 'cc_add_module_type_attribute', 10, 3 );
+}
+
 // Activation hook
 register_activation_hook( __FILE__, 'cc_activate_plugin' );
 
@@ -59,4 +66,66 @@ function cc_activate_plugin(): void {
 function cc_deactivate_plugin(): void {
 	require_once CC_PLUGIN_DIR . 'includes/install.php';
 	cc_remove_custom_capabilities();
+}
+
+/**
+ * Φόρτωση CSS/JS για το cookie consent banner στο frontend.
+ *
+ * @return void
+ */
+function cc_enqueue_frontend_assets(): void {
+	wp_enqueue_style(
+		'cc-cookie-banner',
+		CC_PLUGIN_URL . 'public/cookie-banner.css',
+		[],
+		CC_PLUGIN_VERSION
+	);
+
+	wp_enqueue_script(
+		'cc-cookie-banner',
+		CC_PLUGIN_URL . 'public/cookie-banner.js',
+		[],
+		CC_PLUGIN_VERSION,
+		true
+	);
+}
+
+/**
+ * Προσθήκη type="module" στο script tag του cookie banner.
+ *
+ * @param string $tag    Το HTML tag του script.
+ * @param string $handle Το handle του script.
+ * @param string $src    Η διεύθυνση URL του script.
+ * @return string Το τροποποιημένο tag.
+ */
+function cc_add_module_type_attribute( string $tag, string $handle, string $src ): string {
+	if ( 'cc-cookie-banner' !== $handle ) {
+		return $tag;
+	}
+
+	return str_replace( '<script ', '<script type="module" ', $tag );
+}
+
+/**
+ * Εμφάνιση του cookie consent banner στο frontend (wp_footer).
+ *
+ * Φιλτράρει μόνο τις enabled κατηγορίες και φορτώνει το template.
+ *
+ * @return void
+ */
+function cc_render_cookie_banner(): void {
+	$all_categories = CC_Settings::get_cookie_categories();
+
+	// Εμφάνιση μόνο κατηγοριών με enabled:true
+	$categories = array_filter( $all_categories, function ( $cat ) {
+		return ! empty( $cat['enabled'] );
+	} );
+
+	// Localize κατηγορίες βάσει γλώσσας (WPML ή default)
+	$categories = array_map( [ 'CC_Settings', 'localize_category' ], $categories );
+
+	// Localized κείμενα banner
+	$texts = CC_Settings::get_localized_banner_texts();
+
+	include CC_PLUGIN_DIR . 'templates/cookie-banner.php';
 }
