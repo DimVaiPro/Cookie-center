@@ -1,0 +1,47 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build outputs
+/dist/
+/build/
+
+# Composer
+composer.lock
+
+# NPM / package managers
+package-lock.json
+yarn.lock
+
+# IDE & editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# WordPress
+*.log
+wp-config.php
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# PHP CS cache
+.phpcs-cache
+.php-cs-fixer.cache
+
+# PHPUnit
+/coverage/
+.phpunit.result.cache
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
