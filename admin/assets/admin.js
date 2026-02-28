@@ -84,6 +84,44 @@
 		});
 	}
 
+	// Επαναφορά προεπιλογών κατηγοριών
+	const resetBtn = document.getElementById('cc-reset-categories');
+	if (resetBtn) {
+		resetBtn.addEventListener('click', function () {
+			if (!window.confirm(ccAdmin.confirmReset)) {
+				return;
+			}
+
+			const spinner = document.getElementById('cc-categories-spinner');
+			if (spinner) spinner.classList.add('is-active');
+
+			const data = new FormData();
+			data.append('action', 'cc_reset_cookie_categories');
+			data.append('nonce', ccAdmin.nonceResetCategories);
+
+			fetch(ccAdmin.ajaxUrl, {
+				method: 'POST',
+				credentials: 'same-origin',
+				body: data,
+			})
+				.then(function (response) { return response.json(); })
+				.then(function (result) {
+					if (spinner) spinner.classList.remove('is-active');
+
+					if (result.success) {
+						// Επαναφόρτωση σελίδας για εμφάνιση των νέων τιμών
+						window.location.reload();
+					} else {
+						showNotice('cc-categories-notice', result.data, 'error');
+					}
+				})
+				.catch(function () {
+					if (spinner) spinner.classList.remove('is-active');
+					showNotice('cc-categories-notice', 'Σφάλμα δικτύου.', 'error');
+				});
+		});
+	}
+
 	// Αποθήκευση κειμένων banner
 	const saveBannerBtn = document.getElementById('cc-save-banner-texts');
 	if (saveBannerBtn) {

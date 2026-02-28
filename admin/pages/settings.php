@@ -94,6 +94,9 @@ $categories = CC_Settings::get_cookie_categories();
 		<button type="button" class="button button-primary" id="cc-save-categories">
 			<?php _e( 'Αποθήκευση Κατηγοριών', 'cookie-center' ); ?>
 		</button>
+		<button type="button" class="button button-secondary" id="cc-reset-categories">
+			<?php _e( 'Επαναφορά Προεπιλογών', 'cookie-center' ); ?>
+		</button>
 		<span class="spinner" id="cc-categories-spinner"></span>
 	</p>
 
