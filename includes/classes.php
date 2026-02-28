@@ -13,5 +13,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Οι κλάσεις θα προστεθούν στα επόμενα βήματα.
-// require_once CC_PLUGIN_DIR . 'includes/classes/CC_Settings.php';
+require_once CC_PLUGIN_DIR . 'includes/classes/CC_Settings.php';

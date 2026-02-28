@@ -10,11 +10,148 @@ declare(strict_types=1);
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+$categories = CC_Settings::get_cookie_categories();
 ?>
 <div class="wrap">
 	<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-	<p><?php _e( 'Καλώς ήρθατε στις ρυθμίσεις του Κέντρου Συγκατάθεσης Cookies.', 'cookie-center' ); ?></p>
+	<!-- Κατηγορίες Cookies -->
+	<h2><?php _e( 'Κατηγορίες Cookies', 'cookie-center' ); ?></h2>
+	<p class="description"><?php _e( 'Ενεργοποιήστε ή απενεργοποιήστε κατηγορίες cookies και επεξεργαστείτε τα στοιχεία τους.', 'cookie-center' ); ?></p>
 
-	<?php // Εδώ θα προστεθούν οι ρυθμίσεις στα επόμενα βήματα (2Β, 2Γ κ.λπ.). ?>
+	<table class="widefat fixed striped" id="cc-cookie-categories-table">
+		<thead>
+			<tr>
+				<th style="width:10ch;"><?php _e( 'Εμφάνιση στο Banner', 'cookie-center' ); ?></th>
+				<th style="width:26ch;"><?php _e( 'Όνομα (ID)', 'cookie-center' ); ?></th>
+				<th ><?php _e( 'Εμφανιζόμενο Όνομα', 'cookie-center' ); ?></th>
+				<th ><?php _e( 'Περιγραφή', 'cookie-center' ); ?></th>
+				<th ><?php _e( 'Display Name', 'cookie-center' ); ?></th>
+				<th ><?php _e( 'Description', 'cookie-center' ); ?></th>
+				<th style="width:20ch;"><?php _e( 'Προεπιλεγμένο', 'cookie-center' ); ?></th>
+				<th style="width:20ch;"><?php _e( 'Απενεργοποιημένο', 'cookie-center' ); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php foreach ( $categories as $key => $cat ) : ?>
+				<tr data-category="<?php echo esc_attr( $key ); ?>">
+					<td>
+						<input type="checkbox"
+							class="cc-field-enabled"
+							<?php checked( ! empty( $cat['enabled'] ) ); ?>
+						/>
+					</td>
+					<td>
+						<code><?php echo esc_html( $cat['name'] ); ?></code>
+					</td>
+					<td>
+						<input type="text"
+							class="cc-field-display_name regular-text"
+							value="<?php echo esc_attr( $cat['display_name'] ?? '' ); ?>"
+							style="width:100%;"
+						/>
+					</td>
+					<td>
+						<textarea
+							class="cc-field-description large-text"
+						rows="3"
+							style="width:100%;"
+						><?php echo esc_textarea( $cat['description'] ?? '' ); ?></textarea>
+					</td>
+					<td>
+						<input type="text"
+							class="cc-field-display_name_en regular-text"
+							value="<?php echo esc_attr( $cat['display_name_en'] ?? '' ); ?>"
+							style="width:100%;"
+						/>
+					</td>
+					<td>
+						<textarea
+							class="cc-field-description_en large-text"
+						rows="3"
+							style="width:100%;"
+						><?php echo esc_textarea( $cat['description_en'] ?? '' ); ?></textarea>
+					</td>
+					<td>
+						<input type="checkbox"
+							class="cc-field-preselected"
+							<?php checked( ! empty( $cat['preselected'] ) ); ?>
+						/>
+					</td>
+					<td>
+						<input type="checkbox"
+							class="cc-field-disabled"
+							<?php checked( ! empty( $cat['disabled'] ) ); ?>
+						/>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</tbody>
+	</table>
+
+	<p class="submit">
+		<button type="button" class="button button-primary" id="cc-save-categories">
+			<?php _e( 'Αποθήκευση Κατηγοριών', 'cookie-center' ); ?>
+		</button>
+		<span class="spinner" id="cc-categories-spinner"></span>
+	</p>
+
+	<div id="cc-categories-notice" style="display:none;"></div>
+
+	<hr />
+
+	<!-- Κείμενα και κουμπιά Banner -->
+	<h2><?php _e( 'Κείμενα και κουμπιά Banner', 'cookie-center' ); ?></h2>
+	<p class="description"><?php _e( 'Προτιμήσεις για τα κείμενα και τα κουμπιά που εμφανίζονται στο cookie consent banner.', 'cookie-center' ); ?></p>
+
+	<?php $banner_texts = CC_Settings::get_banner_texts(); ?>
+
+	<table class="form-table" role="presentation">
+		<tbody>
+			<tr>
+				<th scope="row"><label for="cc-banner-text"><?php _e( 'Κύριο Κείμενο Banner', 'cookie-center' ); ?></label></th>
+				<td>
+					<textarea id="cc-banner-text" name="banner_text" class="large-text" rows="3"><?php echo esc_textarea( $banner_texts['banner_text'] ?? '' ); ?></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="cc-banner-text-en"><?php _e( 'Κύριο Κείμενο Banner (English)', 'cookie-center' ); ?></label></th>
+				<td>
+					<textarea id="cc-banner-text-en" name="banner_text_en" class="large-text" rows="3"><?php echo esc_textarea( $banner_texts['banner_text_en'] ?? '' ); ?></textarea>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="cc-btn-accept-all"><?php _e( 'Κουμπί «Αποδοχή όλων»', 'cookie-center' ); ?></label></th>
+				<td>
+					<input type="text" id="cc-btn-accept-all" name="btn_accept_all" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_all'] ?? '' ); ?>" />
+					<input type="text" id="cc-btn-accept-all-en" name="btn_accept_all_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_all_en'] ?? '' ); ?>" placeholder="English" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="cc-btn-accept-selected"><?php _e( 'Κουμπί «Αποδοχή επιλεγμένων»', 'cookie-center' ); ?></label></th>
+				<td>
+					<input type="text" id="cc-btn-accept-selected" name="btn_accept_selected" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_selected'] ?? '' ); ?>" />
+					<input type="text" id="cc-btn-accept-selected-en" name="btn_accept_selected_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_selected_en'] ?? '' ); ?>" placeholder="English" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="cc-btn-reject-all"><?php _e( 'Κουμπί «Απόρριψη όλων»', 'cookie-center' ); ?></label></th>
+				<td>
+					<input type="text" id="cc-btn-reject-all" name="btn_reject_all" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_reject_all'] ?? '' ); ?>" />
+					<input type="text" id="cc-btn-reject-all-en" name="btn_reject_all_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_reject_all_en'] ?? '' ); ?>" placeholder="English" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p class="submit">
+		<button type="button" class="button button-primary" id="cc-save-banner-texts">
+			<?php _e( 'Αποθήκευση Κειμένων Banner', 'cookie-center' ); ?>
+		</button>
+		<span class="spinner" id="cc-banner-texts-spinner"></span>
+	</p>
+
+	<div id="cc-banner-texts-notice" style="display:none;"></div>
+
 </div>

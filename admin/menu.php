@@ -48,6 +48,100 @@ function cc_add_plugin_action_links( array $links ): array {
 add_filter( 'plugin_action_links_' . CC_PLUGIN_BASENAME, 'cc_add_plugin_action_links' );
 
 /**
+ * Φόρτωση admin scripts/styles μόνο στη σελίδα ρυθμίσεων του plugin.
+ *
+ * @param string $hook_suffix Το hook suffix της τρέχουσας admin σελίδας.
+ * @return void
+ */
+function cc_admin_enqueue_scripts( string $hook_suffix ): void {
+	// Φόρτωση μόνο στη σελίδα tools_page_cookie-center
+	if ( 'tools_page_cookie-center' !== $hook_suffix ) {
+		return;
+	}
+
+	wp_enqueue_script(
+		'cc-admin',
+		CC_PLUGIN_URL . 'admin/assets/admin.js',
+		[],
+		CC_PLUGIN_VERSION,
+		true
+	);
+
+	wp_localize_script( 'cc-admin', 'ccAdmin', [
+		'ajaxUrl'            => admin_url( 'admin-ajax.php' ),
+		'nonce'              => wp_create_nonce( 'cc_save_cookie_categories' ),
+		'nonceBannerTexts'   => wp_create_nonce( 'cc_save_banner_texts' ),
+	] );
+}
+add_action( 'admin_enqueue_scripts', 'cc_admin_enqueue_scripts' );
+
+/**
+ * AJAX handler: αποθήκευση κατηγοριών cookies.
+ *
+ * @return void
+ */
+function cc_ajax_save_cookie_categories(): void {
+	// Έλεγχος nonce
+	check_ajax_referer( 'cc_save_cookie_categories', 'nonce' );
+
+	// Έλεγχος δικαιωμάτων
+	if ( ! current_user_can( 'cc_manage_cookie_center_settings' ) ) {
+		wp_send_json_error( __( 'Δεν έχετε δικαίωμα αποθήκευσης.', 'cookie-center' ) );
+	}
+
+	$categories_json = isset( $_POST['categories'] ) ? wp_unslash( $_POST['categories'] ) : '';
+	$categories      = json_decode( $categories_json, true );
+
+	if ( ! is_array( $categories ) ) {
+		wp_send_json_error( __( 'Μη έγκυρα δεδομένα.', 'cookie-center' ) );
+	}
+
+	$result = CC_Settings::save_cookie_categories( $categories );
+
+	// Η update_option() επιστρέφει false και όταν η τιμή δεν άλλαξε,
+	// οπότε θεωρούμε επιτυχία τόσο το true (ενημερώθηκε) όσο και το false-χωρίς-αλλαγή.
+	$existing = CC_Settings::get_cookie_categories();
+	if ( $result || ( $existing === $categories ) ) {
+		wp_send_json_success( __( 'Οι κατηγορίες cookies αποθηκεύτηκαν επιτυχώς.', 'cookie-center' ) );
+	} else {
+		wp_send_json_error( __( 'Σφάλμα κατά την αποθήκευση.', 'cookie-center' ) );
+	}
+}
+add_action( 'wp_ajax_cc_save_cookie_categories', 'cc_ajax_save_cookie_categories' );
+
+/**
+ * AJAX handler: αποθήκευση κειμένων banner.
+ *
+ * @return void
+ */
+function cc_ajax_save_banner_texts(): void {
+	// Έλεγχος nonce
+	check_ajax_referer( 'cc_save_banner_texts', 'nonce' );
+
+	// Έλεγχος δικαιωμάτων
+	if ( ! current_user_can( 'cc_manage_cookie_center_settings' ) ) {
+		wp_send_json_error( __( 'Δεν έχετε δικαίωμα αποθήκευσης.', 'cookie-center' ) );
+	}
+
+	$allowed_keys = [ 'banner_text', 'banner_text_en', 'btn_accept_all', 'btn_accept_all_en', 'btn_accept_selected', 'btn_accept_selected_en', 'btn_reject_all', 'btn_reject_all_en' ];
+	$texts        = [];
+
+	foreach ( $allowed_keys as $key ) {
+		$texts[ $key ] = isset( $_POST[ $key ] ) ? sanitize_textarea_field( wp_unslash( $_POST[ $key ] ) ) : '';
+	}
+
+	$result   = CC_Settings::save_banner_texts( $texts );
+	$existing = CC_Settings::get_banner_texts();
+
+	if ( $result || ( $existing === $texts ) ) {
+		wp_send_json_success( __( 'Τα κείμενα του banner αποθηκεύτηκαν επιτυχώς.', 'cookie-center' ) );
+	} else {
+		wp_send_json_error( __( 'Σφάλμα κατά την αποθήκευση.', 'cookie-center' ) );
+	}
+}
+add_action( 'wp_ajax_cc_save_banner_texts', 'cc_ajax_save_banner_texts' );
+
+/**
  * Εμφάνιση της σελίδας ρυθμίσεων.
  *
  * @return void
