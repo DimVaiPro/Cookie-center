@@ -29,8 +29,8 @@ $categories = CC_Settings::get_cookie_categories();
 				<th ><?php _e( 'Περιγραφή', 'cookie-center' ); ?></th>
 				<th ><?php _e( 'Display Name', 'cookie-center' ); ?></th>
 				<th ><?php _e( 'Description', 'cookie-center' ); ?></th>
-				<th style="width:20ch;"><?php _e( 'Προεπιλεγμένο', 'cookie-center' ); ?></th>
-				<th style="width:20ch;"><?php _e( 'Απενεργοποιημένο', 'cookie-center' ); ?></th>
+				<th style="width:18ch;"><?php _e( 'Προεπιλεγμένο', 'cookie-center' ); ?></th>
+				<th style="width:18ch;"><?php _e( 'Απενεργοποιημένο', 'cookie-center' ); ?></th>
 			</tr>
 		</thead>
 		<tbody>

@@ -22,7 +22,7 @@ class CC_Settings {
 	 * Χρησιμοποιείται ως fallback όταν δεν είναι εγκατεστημένο το WPML.
 	 * Άλλαξε σε 'en' για δοκιμή αγγλικής εμφάνισης.
 	 */
-	const DEFAULT_LANGUAGE = 'en';
+	const DEFAULT_LANGUAGE = 'el';
 
 	/**
 	 * Option name για τις κατηγορίες cookies.
