@@ -122,7 +122,7 @@
 		});
 	}
 
-	// Αποθήκευση κειμένων banner
+	// Αποθήκευση Κειμένων και Εμφάνισης
 	const saveBannerBtn = document.getElementById('cc-save-banner-texts');
 	if (saveBannerBtn) {
 		saveBannerBtn.addEventListener('click', function () {
@@ -134,6 +134,7 @@
 				'btn_accept_all', 'btn_accept_all_en',
 				'btn_accept_selected', 'btn_accept_selected_en',
 				'btn_reject_all', 'btn_reject_all_en',
+				'bg_color', 'accent_color',
 			];
 
 			const formData = new FormData();

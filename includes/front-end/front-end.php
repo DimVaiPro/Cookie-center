@@ -71,12 +71,18 @@ function cc_output_gtm_head_scripts(): void {
 	}
 
 	// Consent Default script — πρέπει να εκτελεστεί πριν τον GTM
+	// Δημιουργία JS object με 'denied' για όλα τα κλειδιά βάσει των default κατηγοριών
+	$denied_defaults = array_fill_keys(
+		array_keys( CC_Settings::get_default_cookie_categories() ),
+		'denied'
+	);
+	$denied_json = wp_json_encode( $denied_defaults );
 	?>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 if (localStorage.getItem('consentMode') === null) {
-	gtag('consent', 'default', {});
+	gtag('consent', 'default', <?php echo $denied_json; ?>);
 } else {
 	gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
 }

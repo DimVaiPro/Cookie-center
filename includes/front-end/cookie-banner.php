@@ -16,7 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<dialog id="cookie-consent-banner" aria-labelledby="cc-dialog-title" aria-describedby="cc-banner-text" tabindex="-1">
+<?php
+// Χρώματα banner από τις ρυθμίσεις
+$all_texts  = CC_Settings::get_banner_texts();
+$bg_color     = $all_texts['bg_color'] ?? '#ffffff';
+$accent_color = $all_texts['accent_color'] ?? '#0073aa';
+?>
+<dialog id="cookie-consent-banner" aria-labelledby="cc-dialog-title" aria-describedby="cc-banner-text" tabindex="-1" style="--cc-bg-color: <?php echo esc_attr( $bg_color ); ?>; --cc-accent-color: <?php echo esc_attr( $accent_color ); ?>;">
 	<form method="dialog">
 		<h2 id="cc-dialog-title" class="cc-sr-only"><?php _e( 'Επιλογές Συγκατάθεσης Cookies', 'cookie-center' ); ?></h2>
 		<p id="cc-banner-text" class="cc-banner-text"><?php echo esc_html( $texts['banner_text'] ); ?></p>

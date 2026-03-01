@@ -104,9 +104,9 @@ $categories = CC_Settings::get_cookie_categories();
 
 	<hr />
 
-	<!-- Κείμενα και κουμπιά Banner -->
-	<h2><?php _e( 'Κείμενα και κουμπιά Banner', 'cookie-center' ); ?></h2>
-	<p class="description"><?php _e( 'Προτιμήσεις για τα κείμενα και τα κουμπιά που εμφανίζονται στο cookie consent banner.', 'cookie-center' ); ?></p>
+	<!-- Κείμενα και εμφάνιση Banner -->
+	<h2><?php _e( 'Κείμενα και εμφάνιση', 'cookie-center' ); ?></h2>
+	<p class="description"><?php _e( 'Προτιμήσεις για τα κείμενα, τα κουμπιά και τα χρώματα που εμφανίζονται στο cookie consent banner.', 'cookie-center' ); ?></p>
 
 	<?php $banner_texts = CC_Settings::get_banner_texts(); ?>
 
@@ -145,12 +145,26 @@ $categories = CC_Settings::get_cookie_categories();
 					<input type="text" id="cc-btn-reject-all-en" name="btn_reject_all_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_reject_all_en'] ?? '' ); ?>" placeholder="English" />
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><label for="cc-bg-color"><?php _e( 'Χρώμα φόντου Banner', 'cookie-center' ); ?></label></th>
+				<td>
+					<input type="color" id="cc-bg-color" name="bg_color" value="<?php echo esc_attr( $banner_texts['bg_color'] ?? '#ffffff' ); ?>" />
+					<p class="description"><?php _e( 'Το χρώμα φόντου του cookie consent banner.', 'cookie-center' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="cc-accent-color"><?php _e( 'Κύριο χρώμα (accent)', 'cookie-center' ); ?></label></th>
+				<td>
+					<input type="color" id="cc-accent-color" name="accent_color" value="<?php echo esc_attr( $banner_texts['accent_color'] ?? '#0073aa' ); ?>" />
+					<p class="description"><?php _e( 'Χρώμα για τη γραμμή στην κορυφή του banner, το κουμπί «Αποδοχή όλων» και το περίγραμμα του «Αποδοχή επιλεγμένων».', 'cookie-center' ); ?></p>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 
 	<p class="submit">
 		<button type="button" class="button button-primary" id="cc-save-banner-texts">
-			<?php _e( 'Αποθήκευση Κειμένων Banner', 'cookie-center' ); ?>
+			<?php _e( 'Αποθήκευση Κειμένων και Εμφάνισης', 'cookie-center' ); ?>
 		</button>
 		<span class="spinner" id="cc-banner-texts-spinner"></span>
 	</p>

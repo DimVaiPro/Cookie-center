@@ -146,7 +146,7 @@ function cc_ajax_reset_cookie_categories(): void {
 add_action( 'wp_ajax_cc_reset_cookie_categories', 'cc_ajax_reset_cookie_categories' );
 
 /**
- * AJAX handler: αποθήκευση κειμένων banner.
+ * AJAX handler: Αποθήκευση Κειμένων και Εμφάνισης.
  *
  * @return void
  */
@@ -159,7 +159,7 @@ function cc_ajax_save_banner_texts(): void {
 		wp_send_json_error( __( 'Δεν έχετε δικαίωμα αποθήκευσης.', 'cookie-center' ) );
 	}
 
-	$allowed_keys = [ 'banner_text', 'banner_text_en', 'btn_accept_all', 'btn_accept_all_en', 'btn_accept_selected', 'btn_accept_selected_en', 'btn_reject_all', 'btn_reject_all_en' ];
+	$allowed_keys = [ 'banner_text', 'banner_text_en', 'btn_accept_all', 'btn_accept_all_en', 'btn_accept_selected', 'btn_accept_selected_en', 'btn_reject_all', 'btn_reject_all_en', 'bg_color', 'accent_color' ];
 	$texts        = [];
 
 	foreach ( $allowed_keys as $key ) {

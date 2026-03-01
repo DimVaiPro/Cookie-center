@@ -168,6 +168,8 @@ class CC_Settings {
 			'btn_accept_selected_en' => 'Accept Selected',
 			'btn_reject_all'       => 'Απόρριψη όλων',
 			'btn_reject_all_en'    => 'Reject All',
+			'bg_color'             => '#ffffff',
+			'accent_color'         => '#0073aa',
 		];
 	}
 
