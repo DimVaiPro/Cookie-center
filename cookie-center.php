@@ -65,5 +65,5 @@ function cc_deactivate_plugin(): void {
 
 // Φόρτωση frontend λειτουργιών (cookie banner)
 if ( ! is_admin() ) {
-	require_once CC_PLUGIN_DIR . 'includes/front-end.php';
+	require_once CC_PLUGIN_DIR . 'includes/front-end/front-end.php';
 }

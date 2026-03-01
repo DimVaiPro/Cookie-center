@@ -13,6 +13,7 @@ if ( dialog ) {
 	// Εμφάνιση dialog μόνο αν δεν υπάρχει αποθηκευμένη συγκατάθεση
 	if ( localStorage.getItem( 'consentMode' ) === null ) {
 		dialog.show();
+		dialog.focus(); // Εστίαση στο dialog ώστε ο screen reader να διαβάσει τον τίτλο πριν την πλοήγηση
 
 		const checkboxes = dialog.querySelectorAll( 'input[type="checkbox"]' );
 

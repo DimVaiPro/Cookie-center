@@ -107,5 +107,5 @@ function cc_render_cookie_banner(): void {
 	// Localized κείμενα banner
 	$texts = CC_Settings::get_localized_banner_texts();
 
-	include CC_PLUGIN_DIR . 'templates/cookie-banner.php';
+	include CC_PLUGIN_DIR . 'includes/front-end/cookie-banner.php';
 }
