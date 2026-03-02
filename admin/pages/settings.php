@@ -24,7 +24,7 @@ $categories = CC_Settings::get_cookie_categories();
 		<thead>
 			<tr>
 				<th style="width:10ch;"><?php _e( 'Εμφάνιση στο Banner', 'cookie-center' ); ?></th>
-				<th style="width:26ch;"><?php _e( 'Όνομα (ID)', 'cookie-center' ); ?></th>
+				<th style="width:26ch;"><?php _e( 'Όνομα κατηγορίας cookie (Storage Type)', 'cookie-center' ); ?></th>
 				<th ><?php _e( 'Εμφανιζόμενο Όνομα', 'cookie-center' ); ?></th>
 				<th ><?php _e( 'Περιγραφή', 'cookie-center' ); ?></th>
 				<th ><?php _e( 'Display Name', 'cookie-center' ); ?></th>
@@ -209,7 +209,7 @@ $categories = CC_Settings::get_cookie_categories();
 					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12" placeholder="<!-- Google Tag Manager -->
 <script></script>"><?php echo esc_textarea( $gtm_code ); ?></textarea>
 					<p class="description">
-						<?php _e( 'Επικολλήστε τον κώδικα &lt;script&gt; του Google Tag Manager. Πριν από αυτόν, θα προστεθεί αυτόματα το Consent Default script.', 'cookie-center' ); ?>
+						<?php _e( 'Ο κώδικας αυτός τοποθετείται αυτόματα μετά το "Consent Default script" που διαχειρίζεται τη συγκατάθεση του χρήστη. Το πρόσθετο ορίζει ήδη το αντικείμενο window.dataLayer και τη συνάρτηση gtag(), οπότε δεν χρειάζεται να τα ορίσετε ξανά αν τα χρησιμοποιείτε.', 'cookie-center' ); ?>
 					</p>
 				</td>
 			</tr>
@@ -224,5 +224,50 @@ $categories = CC_Settings::get_cookie_categories();
 	</p>
 
 	<div id="cc-gtm-notice" style="display:none;"></div>
+
+	<hr />
+
+	<!-- Τεκμηρίωση -->
+	<h2><?php _e( 'Τεκμηρίωση', 'cookie-center' ); ?></h2>
+
+	<h3><?php _e( 'Έλεγχος λειτουργίας', 'cookie-center' ); ?></h3>
+	<p>
+		<?php _e( 'Για να διαπιστώσετε ότι το πρόσθετο λειτουργεί σωστά, ανοίξτε τα Developer Tools του browser (F12) και ελέγξτε τα παρακάτω:', 'cookie-center' ); ?>
+	</p>
+	<ul style="list-style: disc; margin-left: 2em;">
+		<li>
+			<strong><?php _e( 'window.dataLayer', 'cookie-center' ); ?></strong> &mdash;
+			<?php _e( 'Στην καρτέλα Console, εκτελέστε την εντολή', 'cookie-center' ); ?>
+			<code>window.dataLayer</code>
+			<?php _e( 'για να δείτε όλα τα events που έχουν καταγραφεί, συμπεριλαμβανομένου του event consent default (πριν το κλείσιμο του banner) και του event consent update (μετά το κλείσιμο).', 'cookie-center' ); ?>
+		</li>
+		<li>
+			<strong><?php _e( 'localStorage – consentMode', 'cookie-center' ); ?></strong> &mdash;
+			<?php _e( 'Στην καρτέλα Application &rsaquo; Local Storage, αναζητήστε το κλειδί', 'cookie-center' ); ?>
+			<code>consentMode</code>
+			<?php _e( 'για να επαληθεύσετε ότι οι επιλογές του χρήστη έχουν αποθηκευτεί σωστά μετά το κλείσιμο του banner.', 'cookie-center' ); ?>
+		</li>
+	</ul>
+
+	<h3><?php _e( 'Google Documentation', 'cookie-center' ); ?></h3>
+	<ul style="list-style: disc; margin-left: 2em;">
+		<li>
+			<a href="https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced" target="_blank" rel="noopener noreferrer">
+				<?php _e( 'Consent Mode – Οδηγός υλοποίησης (Google Tag Platform)', 'cookie-center' ); ?>
+			</a>
+            <p>
+                <?php _e( 'Σημειώνεται ότι αυτό το πρόσθετο χρησιμοποιεί Advanced Consent Mode και gtag.js.', 'cookie-center' ); ?>
+		</li>
+		<li>
+			<a href="https://support.google.com/tagmanager/answer/10718549?hl=en" target="_blank" rel="noopener noreferrer">
+				<?php _e( 'Κατηγορίες cookies και τύποι συγκατάθεσης (Google Tag Manager)', 'cookie-center' ); ?>
+			</a>
+		</li>
+		<li>
+			<a href="https://support.google.com/analytics/answer/13802165?hl=en" target="_blank" rel="noopener noreferrer">
+				<?php _e( 'Πώς επηρεάζουν τα Google Analytics οι επιλογές συγκατάθεσης του χρήστη (Google Analytics)', 'cookie-center' ); ?>
+			</a>
+		</li>
+	</ul>
 
 </div>

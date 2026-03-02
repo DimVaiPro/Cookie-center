@@ -80,7 +80,7 @@ function cc_output_gtm_head_scripts(): void {
 	?>
 <script>
 window.dataLayer = window.dataLayer || [];
-function gtag() { dataLayer.push(arguments); }
+window.gtag = window.gtag || function() { dataLayer.push(arguments); };
 if (localStorage.getItem('consentMode') === null) {
 	gtag('consent', 'default', <?php echo $denied_json; ?>);
 } else {

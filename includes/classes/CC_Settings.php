@@ -82,7 +82,7 @@ class CC_Settings {
 				'name'            => 'analytics_storage',
 				'display_name'    => 'Στατιστικά',
 				'display_name_en' => 'Analytics',
-				'description'     => 'Ενεργοποιεί αποθήκευση σχετική με analytics (π.χ. σελίδες που επισκέπτεται ο χρήστης, διάρκεια επίσκεψης).',
+				'description'     => 'Ενεργοποιεί αποθήκευση σχετική με στατιστικά χρήσης (π.χ. πλήθος προβολών σελίδων, διάρκεια παραμονής).',
 				'description_en'  => 'Enables storage (such as cookies) related to analytics e.g. pages visited, visit duration.',
 				'enabled'         => true,
 				'preselected'     => false,

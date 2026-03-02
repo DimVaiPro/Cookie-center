@@ -44,14 +44,14 @@ $accent_color = $all_texts['accent_color'] ?? '#0073aa';
 		</fieldset>
 
 		<div class="cc-buttons">
+            <button type="submit" value="reject-all">
+                <?php echo esc_html( $texts['btn_reject_all'] ); ?>
+            </button>
+            <button type="submit" value="accept-selected">
+                <?php echo esc_html( $texts['btn_accept_selected'] ); ?>
+            </button>
 			<button type="submit" value="accept-all">
 				<?php echo esc_html( $texts['btn_accept_all'] ); ?>
-			</button>
-			<button type="submit" value="accept-selected">
-				<?php echo esc_html( $texts['btn_accept_selected'] ); ?>
-			</button>
-			<button type="submit" value="reject-all">
-				<?php echo esc_html( $texts['btn_reject_all'] ); ?>
 			</button>
 		</div>
 	</form>
