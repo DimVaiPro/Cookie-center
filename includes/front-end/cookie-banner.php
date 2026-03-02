@@ -25,7 +25,7 @@ $accent_color = $all_texts['accent_color'] ?? '#0073aa';
 <dialog id="cookie-consent-banner" aria-labelledby="cc-dialog-title" aria-describedby="cc-banner-text" tabindex="-1" style="--cc-bg-color: <?php echo esc_attr( $bg_color ); ?>; --cc-accent-color: <?php echo esc_attr( $accent_color ); ?>;">
 	<form method="dialog">
 		<h2 id="cc-dialog-title" class="cc-sr-only"><?php _e( 'Επιλογές Συγκατάθεσης Cookies', 'cookie-center' ); ?></h2>
-		<p id="cc-banner-text" class="cc-banner-text"><?php echo esc_html( $texts['banner_text'] ); ?></p>
+		<div id="cc-banner-text" class="cc-banner-text"><?php echo wp_kses_post( $texts['banner_text'] ); ?></div>
 
 		<fieldset class="cc-categories">
 			<legend class="cc-sr-only"><?php _e( 'Κατηγορίες Cookies', 'cookie-center' ); ?></legend>

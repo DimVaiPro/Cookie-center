@@ -113,15 +113,35 @@ $categories = CC_Settings::get_cookie_categories();
 	<table class="form-table" role="presentation">
 		<tbody>
 			<tr>
-				<th scope="row"><label for="cc-banner-text"><?php _e( 'Κύριο Κείμενο Banner', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc_banner_text"><?php _e( 'Κύριο Κείμενο Banner', 'cookie-center' ); ?></label></th>
 				<td>
-					<textarea id="cc-banner-text" name="banner_text" class="large-text" rows="3"><?php echo esc_textarea( $banner_texts['banner_text'] ?? '' ); ?></textarea>
+					<?php
+					wp_editor(
+						$banner_texts['banner_text'] ?? '',
+						'cc_banner_text',
+						[
+							'textarea_name' => 'banner_text',
+							'textarea_rows' => 5,
+							'media_buttons' => false,
+						]
+					);
+					?>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="cc-banner-text-en"><?php _e( 'Κύριο Κείμενο Banner (English)', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc_banner_text_en"><?php _e( 'Κύριο Κείμενο Banner (English)', 'cookie-center' ); ?></label></th>
 				<td>
-					<textarea id="cc-banner-text-en" name="banner_text_en" class="large-text" rows="3"><?php echo esc_textarea( $banner_texts['banner_text_en'] ?? '' ); ?></textarea>
+					<?php
+					wp_editor(
+						$banner_texts['banner_text_en'] ?? '',
+						'cc_banner_text_en',
+						[
+							'textarea_name' => 'banner_text_en',
+							'textarea_rows' => 5,
+							'media_buttons' => false,
+						]
+					);
+					?>
 				</td>
 			</tr>
 			<tr>
@@ -186,7 +206,8 @@ $categories = CC_Settings::get_cookie_categories();
 			<tr>
 				<th scope="row"><label for="cc-gtm-code"><?php _e( 'Κώδικας GTM', 'cookie-center' ); ?></label></th>
 				<td>
-					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12"><?php echo esc_textarea( $gtm_code ); ?></textarea>
+					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12" placeholder="<!-- Google Tag Manager -->
+<script></script>"><?php echo esc_textarea( $gtm_code ); ?></textarea>
 					<p class="description">
 						<?php _e( 'Επικολλήστε τον κώδικα &lt;script&gt; του Google Tag Manager. Πριν από αυτόν, θα προστεθεί αυτόματα το Consent Default script.', 'cookie-center' ); ?>
 					</p>

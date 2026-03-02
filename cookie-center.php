@@ -3,7 +3,7 @@
  * Plugin Name: Κέντρο Συγκατάθεσης Cookies
  * Plugin URI:  https://computerstudio.gr/cookie-center TODO: Update with actual github URL
  * Description: Ολοκληρωμένο σύστημα διαχείρισης συγκατάθεσης cookies για τον ιστότοπό σας. Παρέχει cookie consent banner, διαχείριση κατηγοριών cookies και ενσωμάτωση Google Tag Manager.
- * Version:     1.1
+ * Version:     1.2
  * Author:      Computer Studio
  * Author URI:  https://computerstudio.gr
  * License:     GPL-2.0-or-later
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Σταθερές plugin
-define( 'CC_PLUGIN_VERSION', '1.1' );
+define( 'CC_PLUGIN_VERSION', '1.2' );
 define( 'CC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'CC_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

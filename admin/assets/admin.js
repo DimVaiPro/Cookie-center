@@ -128,7 +128,10 @@
 		saveBannerBtn.addEventListener('click', function () {
 			const spinner = document.getElementById('cc-banner-texts-spinner');
 			if (spinner) spinner.classList.add('is-active');
-
+			// Sync τυχόν ενεργών TinyMCE editors πριν διαβαστεί η τιμή τους
+			if (typeof tinymce !== 'undefined') {
+				tinymce.triggerSave();
+			}
 			const fields = [
 				'banner_text', 'banner_text_en',
 				'btn_accept_all', 'btn_accept_all_en',

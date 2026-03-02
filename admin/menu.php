@@ -79,6 +79,8 @@ function cc_admin_enqueue_scripts( string $hook_suffix ): void {
 	// Ενεργοποίηση CodeMirror (native WP) για HTML syntax highlighting στο GTM textarea
 	$cm_settings = wp_enqueue_code_editor( [ 'type' => 'text/html' ] );
 	if ( false !== $cm_settings ) {
+		// Προσθήκη placeholder στον CodeMirror editor
+		$cm_settings['codemirror']['placeholder'] = "<!-- Google Tag Manager -->\n<script></script>";
 		wp_add_inline_script(
 			'code-editor',
 			sprintf(
@@ -162,8 +164,14 @@ function cc_ajax_save_banner_texts(): void {
 	$allowed_keys = [ 'banner_text', 'banner_text_en', 'btn_accept_all', 'btn_accept_all_en', 'btn_accept_selected', 'btn_accept_selected_en', 'btn_reject_all', 'btn_reject_all_en', 'bg_color', 'accent_color' ];
 	$texts        = [];
 
+	// Κλειδιά που δέχονται HTML (κύριο κείμενο banner) — χρήση wp_kses_post αντί sanitize_textarea_field
+	$html_keys = [ 'banner_text', 'banner_text_en' ];
+
 	foreach ( $allowed_keys as $key ) {
-		$texts[ $key ] = isset( $_POST[ $key ] ) ? sanitize_textarea_field( wp_unslash( $_POST[ $key ] ) ) : '';
+		$raw           = isset( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : '';
+		$texts[ $key ] = in_array( $key, $html_keys, true )
+			? wp_kses_post( $raw )
+			: sanitize_textarea_field( $raw );
 	}
 
 	$result   = CC_Settings::save_banner_texts( $texts );
