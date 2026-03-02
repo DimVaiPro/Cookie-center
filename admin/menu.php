@@ -170,7 +170,7 @@ function cc_ajax_save_banner_texts(): void {
 	$existing = CC_Settings::get_banner_texts();
 
 	if ( $result || ( $existing === $texts ) ) {
-		wp_send_json_success( __( 'Τα κείμενα του banner αποθηκεύτηκαν επιτυχώς.', 'cookie-center' ) );
+		wp_send_json_success( __( 'Η εμφάνιση του banner αποθηκεύτηκε επιτυχώς.', 'cookie-center' ) );
 	} else {
 		wp_send_json_error( __( 'Σφάλμα κατά την αποθήκευση.', 'cookie-center' ) );
 	}

@@ -125,21 +125,21 @@ $categories = CC_Settings::get_cookie_categories();
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="cc-btn-accept-all"><?php _e( 'Κουμπί «Αποδοχή όλων»', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc-btn-accept-all"><?php _e( 'Κουμπί «Αποδοχή Όλων»', 'cookie-center' ); ?></label></th>
 				<td>
 					<input type="text" id="cc-btn-accept-all" name="btn_accept_all" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_all'] ?? '' ); ?>" />
 					<input type="text" id="cc-btn-accept-all-en" name="btn_accept_all_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_all_en'] ?? '' ); ?>" placeholder="English" />
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="cc-btn-accept-selected"><?php _e( 'Κουμπί «Αποδοχή επιλεγμένων»', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc-btn-accept-selected"><?php _e( 'Κουμπί «Αποδοχή Επιλεγμένων»', 'cookie-center' ); ?></label></th>
 				<td>
 					<input type="text" id="cc-btn-accept-selected" name="btn_accept_selected" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_selected'] ?? '' ); ?>" />
 					<input type="text" id="cc-btn-accept-selected-en" name="btn_accept_selected_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_accept_selected_en'] ?? '' ); ?>" placeholder="English" />
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="cc-btn-reject-all"><?php _e( 'Κουμπί «Απόρριψη όλων»', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc-btn-reject-all"><?php _e( 'Κουμπί «Απόρριψη Όλων»', 'cookie-center' ); ?></label></th>
 				<td>
 					<input type="text" id="cc-btn-reject-all" name="btn_reject_all" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_reject_all'] ?? '' ); ?>" />
 					<input type="text" id="cc-btn-reject-all-en" name="btn_reject_all_en" class="regular-text" value="<?php echo esc_attr( $banner_texts['btn_reject_all_en'] ?? '' ); ?>" placeholder="English" />
@@ -153,10 +153,10 @@ $categories = CC_Settings::get_cookie_categories();
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="cc-accent-color"><?php _e( 'Κύριο χρώμα (accent)', 'cookie-center' ); ?></label></th>
+				<th scope="row"><label for="cc-accent-color"><?php _e( 'Κύριο χρώμα (accent color)', 'cookie-center' ); ?></label></th>
 				<td>
 					<input type="color" id="cc-accent-color" name="accent_color" value="<?php echo esc_attr( $banner_texts['accent_color'] ?? '#0073aa' ); ?>" />
-					<p class="description"><?php _e( 'Χρώμα για τη γραμμή στην κορυφή του banner, το κουμπί «Αποδοχή όλων» και το περίγραμμα του «Αποδοχή επιλεγμένων».', 'cookie-center' ); ?></p>
+					<p class="description"><?php _e( 'Χρώμα για τη γραμμή στην κορυφή του banner, το κουμπί «Αποδοχή Όλων» και το περίγραμμα του «Αποδοχή Επιλεγμένων».', 'cookie-center' ); ?></p>
 				</td>
 			</tr>
 		</tbody>

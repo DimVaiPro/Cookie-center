@@ -25,5 +25,4 @@ foreach ( $roles_to_clean as $role_name ) {
 // Διαγραφή options που δημιούργησε το plugin
 delete_option( 'cc_cookie_categories' );
 delete_option( 'cc_banner_texts' );
-delete_option( 'cc_banner_appearance' );
-delete_option( 'cc_tag_manager_code' );
+delete_option( 'cc_gtm_code' );
