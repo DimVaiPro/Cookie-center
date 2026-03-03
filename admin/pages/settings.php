@@ -196,7 +196,7 @@ $categories = CC_Settings::get_cookie_categories();
 	<!-- Google Tag Manager -->
 	<h2><?php _e( 'Google Tag Manager', 'cookie-center' ); ?></h2>
 	<p class="description">
-		<?php _e( 'Επικολλήστε εδώ τον κώδικα Google Tag Manager (μόνο το &lt;script&gt; που τοποθετείται στο &lt;head&gt;). Αυτή η ενότητα λειτουργεί αποκλειστικά με κώδικα Google Tag Manager (GTM) και δεν υποστηρίζει κώδικα Google Analytics ή άλλου είδους tracking κώδικα.', 'cookie-center' ); ?>
+		<?php _e( 'Επικολλήστε εδώ τον κώδικα Google Tag Manager (μόνο το &lt;script&gt; που τοποθετείται στο &lt;head&gt;). Αυτή η ενότητα λειτουργεί αποκλειστικά με κώδικα Google Tag Manager (GTM) και δεν υποστηρίζει κώδικα Google Analytics ή άλλου είδους tracking κώδικα. Χρησιμοποιείτε τον κώδικα Google Tag Manager (&lt;!-- Google Tag Manager --&gt;) κι όχι τον κώδικα gtag.js (&lt;!-- Google tag (gtag.js) --&gt;)', 'cookie-center' ); ?>
 	</p>
 
 	<?php $gtm_code = CC_Settings::get_gtm_code(); ?>
@@ -208,14 +208,14 @@ $categories = CC_Settings::get_cookie_categories();
 				<td>
 					<textarea id="cc-gtm-code" name="gtm_code" class="large-text" rows="12" placeholder="<!-- Google Tag Manager -->
 <script></script>"><?php echo esc_textarea( $gtm_code ); ?></textarea>
-					<p class="description">
-						<?php _e( 'Ο κώδικας αυτός τοποθετείται αυτόματα μετά το "Consent Default script" που διαχειρίζεται τη συγκατάθεση του χρήστη. Το πρόσθετο ορίζει ήδη το αντικείμενο window.dataLayer και τη συνάρτηση gtag(), οπότε δεν χρειάζεται να τα ορίσετε ξανά αν τα χρησιμοποιείτε.', 'cookie-center' ); ?>
-					</p>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
+    <p class="description">
+        <?php _e( 'Ο κώδικας αυτός τοποθετείται αυτόματα μετά το "Consent Default script" που διαχειρίζεται τη συγκατάθεση του χρήστη. Το πρόσθετο ορίζει ήδη το αντικείμενο window.dataLayer και τη συνάρτηση gtag(), οπότε δεν χρειάζεται να τα ορίσετε ξανά αν τυχόν τα χρησιμοποιείτε για αποστολή δεδομένων στον Tag Manager.', 'cookie-center' ); ?>
+    </p>
 	<p class="submit">
 		<button type="button" class="button button-primary" id="cc-save-gtm-code">
 			<?php _e( 'Αποθήκευση Google Tag Manager', 'cookie-center' ); ?>
@@ -255,8 +255,9 @@ $categories = CC_Settings::get_cookie_categories();
 			<a href="https://developers.google.com/tag-platform/security/guides/consent?consentmode=advanced" target="_blank" rel="noopener noreferrer">
 				<?php _e( 'Consent Mode – Οδηγός υλοποίησης (Google Tag Platform)', 'cookie-center' ); ?>
 			</a>
-            <p>
-                <?php _e( 'Σημειώνεται ότι αυτό το πρόσθετο χρησιμοποιεί Advanced Consent Mode και gtag.js.', 'cookie-center' ); ?>
+            <div>
+                <?php _e( 'Σημειώνεται ότι αυτό το πρόσθετο χρησιμοποιεί Advanced Consent Mode και τη χρήση του Google Tag Manager (όχι το gtag.js).', 'cookie-center' ); ?>
+            </div>
 		</li>
 		<li>
 			<a href="https://support.google.com/tagmanager/answer/10718549?hl=en" target="_blank" rel="noopener noreferrer">
