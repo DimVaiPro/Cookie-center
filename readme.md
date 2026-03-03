@@ -2,9 +2,9 @@
 Contributors: Computer Studio
 Tags: cookies, consent, gdpr, cookie banner, tag manager
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,10 +14,15 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Το **Κέντρο Συγκατάθεσης Cookies** παρέχει ένα ολοκληρωμένο οικοσύστημα για τη διαχείριση της συγκατάθεσης cookies στον ιστότοπο. Περιλαμβάνει:
 
-* Cookie consent banner με υποστήριξη πολλαπλών κατηγοριών cookies
-* Admin panel για διαχείριση κατηγοριών cookies και κειμένων banner
-* Ενσωμάτωση Google Tag Manager
-* Συμβατότητα με WPML για πολύγλωσσους ιστότοπους
+* Ενσωμάτωση Google Tag Manager.
+* Cookie consent banner με υποστήριξη πολλαπλών κατηγοριών cookies. Υποστηρίζονται οι κατηγορίες: security_storage, functionality_storage, personalization_storage, analytics_storage, ad_storage, ad_user_data, ad_personalization.
+* Admin panel για διαχείριση κατηγοριών cookies, χρωμάτων και κειμένων banner.
+* Συμβατότητα με WPML για εμφάνιση κείμενων σε Ελληνικά και Αγγλικά. 
+
+Δείγμα banner:
+[![Cookie Center Banner](sample/sample.png)](sample/sample.png)
+
+
 
 == Εγκατάσταση ==
 

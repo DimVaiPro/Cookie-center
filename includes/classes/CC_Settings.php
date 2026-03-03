@@ -160,8 +160,8 @@ class CC_Settings {
 	 */
 	public static function get_default_banner_texts(): array {
 		return [
-			'banner_text'          => "<p>Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία σας στον ιστότοπό μας.</p>\n<p>Διαβάστε περισσότερα <a href=\"/cookie-policy\">εδώ.</a></p>",
-			'banner_text_en'       => "<p>We use cookies to improve your experience on our website.</p>\n<p>Read more <a href=\"/cookie-policy\">here.</a></p>",
+			'banner_text'          => "<p>Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία σας στον ιστότοπό μας.</p>\n<p>Διαβάστε περισσότερα <a href=\"/cookie-policy\">εδώ</a>.</p>",
+			'banner_text_en'       => "<p>We use cookies to improve your experience on our website.</p>\n<p>Read more <a href=\"/cookie-policy\">here</a>.</p>",
 			'btn_accept_all'       => 'Αποδοχή Όλων',
 			'btn_accept_all_en'    => 'Accept All',
 			'btn_accept_selected'    => 'Αποδοχή Επιλεγμένων',

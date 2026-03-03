@@ -1,5 +1,16 @@
-# Build Production ZIP για το WordPress Plugin του project
+﻿# Build Production ZIP για το WordPress Plugin του project
 # Δημιουργεί ένα zip αρχείο έτοιμο για production deployment
+
+# Σε περίπτωση error, εμφάνισε το μήνυμα και περίμενε Enter πριν κλείσει το terminal
+$ErrorActionPreference = "Stop"
+trap {
+    Write-Host "`nERROR: $_" -ForegroundColor Red
+    Read-Host "`nΠάτησε Enter για να κλείσεις"
+    exit 1
+}
+
+# Μετάβαση στον φάκελο του script (απαραίτητο για "Run with PowerShell")
+Set-Location $PSScriptRoot
 
 # Ρυθμίσεις
 $pluginName = Split-Path -Leaf $PSScriptRoot # Το όνομα του φακέλου του plugin
@@ -80,7 +91,7 @@ foreach ($pattern in $excludePatterns) {
         Write-Host "  ✗ Removed: $($file.Name)" -ForegroundColor Red
     }
 }
-
+ 
 # Δημιουργία ZIP
 Write-Host "`nCreating ZIP archive..." -ForegroundColor Yellow
 $zipPath = "$outputDir\$zipName"
@@ -91,8 +102,24 @@ if (Test-Path $zipPath) {
     Write-Host "Replaced existing ZIP" -ForegroundColor Cyan
 }
 
-# Συμπίεση
-Compress-Archive -Path $tempDir -DestinationPath $zipPath -Force
+# Συμπίεση με forward slashes για συμβατότητα με Linux servers.
+# Το Compress-Archive του PowerShell χρησιμοποιεί backslashes (\) στα ονόματα των entries,
+# τα οποία σε Linux server δεν αναγνωρίζονται ως directory separators, με αποτέλεσμα
+# όλα τα αρχεία να καταλήγουν στον ίδιο φάκελο με το full path ως όνομα αρχείου.
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$outputDirFull = (Resolve-Path $outputDir).Path
+$zipStream = [System.IO.File]::Open($zipPath, [System.IO.FileMode]::Create)
+$archive = New-Object System.IO.Compression.ZipArchive($zipStream, [System.IO.Compression.ZipArchiveMode]::Create)
+
+Get-ChildItem -Path $tempDir -Recurse -File | ForEach-Object {
+    $filePath = $_.FullName
+    # Μετατροπή backslashes σε forward slashes για συμβατότητα με Linux
+    $entryName = $filePath.Substring($outputDirFull.Length + 1).Replace('\', '/')
+    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($archive, $filePath, $entryName) | Out-Null
+}
+
+$archive.Dispose()
+$zipStream.Dispose()
 
 # Καθαρισμός temp directory
 Remove-Item -Recurse -Force $tempDir
@@ -103,3 +130,5 @@ Write-Host "`n=== Build Complete ===" -ForegroundColor Green
 Write-Host "Output: $zipPath" -ForegroundColor Cyan
 Write-Host "Size: $([math]::Round($zipSize, 2)) MB" -ForegroundColor Cyan
 Write-Host "`nReady for production deployment! 🚀" -ForegroundColor Green
+
+Start-Sleep -Seconds 3

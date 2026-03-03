@@ -196,7 +196,7 @@ $categories = CC_Settings::get_cookie_categories();
 	<!-- Google Tag Manager -->
 	<h2><?php _e( 'Google Tag Manager', 'cookie-center' ); ?></h2>
 	<p class="description">
-		<?php _e( 'Επικολλήστε εδώ τον κώδικα Google Tag Manager (μόνο το &lt;script&gt; που τοποθετείται στο &lt;head&gt;). Αυτή η ενότητα λειτουργεί αποκλειστικά με κώδικα Google Tag Manager (GTM) και δεν υποστηρίζει κώδικα Google Analytics ή άλλου είδους tracking κώδικα. Χρησιμοποιείτε τον κώδικα Google Tag Manager (&lt;!-- Google Tag Manager --&gt;) κι όχι τον κώδικα gtag.js (&lt;!-- Google tag (gtag.js) --&gt;)', 'cookie-center' ); ?>
+		<?php _e( 'Επικολλήστε εδώ τον κώδικα Google Tag Manager (μόνο το &lt;script&gt; που τοποθετείται στο &lt;head&gt;). Αυτή η ενότητα λειτουργεί αποκλειστικά με κώδικα Google Tag Manager (GTM) και δεν υποστηρίζει κώδικα Google Analytics ή άλλου είδους tracking κώδικα. Χρησιμοποιήστε τον κώδικα Google Tag Manager (&lt;!-- Google Tag Manager --&gt;) κι όχι τον κώδικα gtag.js (&lt;!-- Google tag (gtag.js) --&gt;)', 'cookie-center' ); ?>
 	</p>
 
 	<?php $gtm_code = CC_Settings::get_gtm_code(); ?>
