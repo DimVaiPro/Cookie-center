@@ -247,6 +247,12 @@ $categories = CC_Settings::get_cookie_categories();
 			<code>consentMode</code>
 			<?php _e( 'για να επαληθεύσετε ότι οι επιλογές του χρήστη έχουν αποθηκευτεί σωστά μετά το κλείσιμο του banner.', 'cookie-center' ); ?>
 		</li>
+		<li>
+			<strong><?php _e( 'Επανεμφάνιση banner', 'cookie-center' ); ?></strong> &mdash;
+			<?php _e( 'Μπορείτε να εμφανίσετε ξανά το banner ανά πάσα στιγμή (π.χ. από σύνδεσμο «Διαχείριση cookies» στο footer) καλώντας τη συνάρτηση', 'cookie-center' ); ?>
+			<code>ccShowBanner()</code>
+			<?php _e( 'μέσω JavaScript.', 'cookie-center' ); ?>
+		</li>
 	</ul>
 
 	<h3><?php _e( 'Google Documentation', 'cookie-center' ); ?></h3>

@@ -81,8 +81,9 @@ function cc_output_gtm_head_scripts(): void {
 <script>
 window.dataLayer = window.dataLayer || [];
 window.gtag = window.gtag || function() { dataLayer.push(arguments); };
+window.ccNullConsent = <?php echo $denied_json; ?>;
 if (localStorage.getItem('consentMode') === null) {
-	gtag('consent', 'default', <?php echo $denied_json; ?>);
+	gtag('consent', 'default', window.ccNullConsent);
 } else {
 	gtag('consent', 'default', JSON.parse(localStorage.getItem('consentMode')));
 }
